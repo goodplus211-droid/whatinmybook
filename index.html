@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f4f1ea">
+<title>8월 월말 회고 | 일독클</title>
+<style>
+:root{--bg:#f4f1ea;--card:#fffdf8;--ink:#262521;--muted:#777268;--line:#ded8cc;--soft:#ece8df}
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Noto Sans KR","Apple SD Gothic Neo",sans-serif}
+.wrap{max-width:700px;margin:auto;padding:20px 15px 80px}.hero{padding:24px 6px 12px}.eyebrow{font-size:12px;letter-spacing:.18em;color:var(--muted);font-weight:700}
+h1{font-family:Georgia,serif;font-size:37px;line-height:1.05;margin:9px 0 10px}.sub{color:var(--muted);font-size:14px;line-height:1.7}
+.event{margin-top:16px;padding:14px 16px;border-radius:16px;background:#ebe6dc;font-size:14px;line-height:1.7}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:12px 0;box-shadow:0 2px 10px #00000008}
+.section-title{font-size:18px;font-weight:800;margin:22px 4px 10px}.pick{display:flex;gap:12px;align-items:flex-start}.pick input{width:22px;height:22px;margin-top:1px}
+.pick label{font-weight:800;font-size:17px}.hint{font-size:13px;color:var(--muted);margin-top:5px;line-height:1.5}
+.fields{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}.fields.on{display:block}
+input[type=text],textarea{width:100%;border:1px solid var(--line);border-radius:12px;background:white;padding:12px;font:inherit;color:var(--ink);margin-top:8px}
+textarea{min-height:92px;resize:vertical}.photo{margin-top:10px}.photo input{width:100%}.preview{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:13px;margin-top:10px;display:none;background:#eee}
+.required{border-left:4px solid var(--ink)}.req{font-size:11px;font-weight:700;background:var(--soft);border-radius:999px;padding:4px 8px;margin-left:6px}
+.actions{position:sticky;bottom:0;padding:14px 0 4px;background:linear-gradient(transparent,var(--bg) 35%)}button{border:0;border-radius:14px;padding:14px 16px;font-weight:800;font-size:15px;cursor:pointer}
+.primary{width:100%;background:var(--ink);color:white}.secondary{background:#e7e2d8;color:var(--ink);flex:1}.danger{background:#eee3e1;color:#6a2d27;width:100%;margin-top:10px}
+.status,.privacy,.footer{text-align:center;font-size:12px;color:var(--muted);line-height:1.5;margin-top:14px}
+#result{display:none}.result-head{text-align:center;padding:28px 8px 18px}.result-head h2{font-family:Georgia,serif;font-size:40px;margin:5px 0}.name-display{font-size:15px;font-weight:700;margin-top:8px}
+.result-card{background:var(--card);border-radius:20px;overflow:hidden;margin:14px 0;border:1px solid var(--line)}.result-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.result-body{padding:18px}.result-label{font-size:11px;letter-spacing:.14em;color:var(--muted);font-weight:800}.result-title{font-size:21px;font-weight:800;margin:7px 0}
+.result-text{white-space:pre-wrap;line-height:1.7;color:#45423c}.result-required{padding:22px;border-top:1px solid var(--line)}.result-required:first-of-type{border-top:0}
+.result-required h3{margin:5px 0 10px;font-size:19px}.result-actions{display:flex;gap:10px;margin-top:18px}
+@media(max-width:420px){h1{font-size:32px}.wrap{padding-left:13px;padding-right:13px}} 
+
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    min-height: 297mm !important;
+    background: #ffffff !important;
+    color: #222 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Noto Sans KR",
+                 "Apple SD Gothic Neo", sans-serif !important;
+  }
+
+  .wrap {
+    width: 210mm !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+  }
+
+  #formView,
+  .result-actions,
+  .privacy,
+  .status,
+  .footer {
+    display: none !important;
+  }
+
+  #result {
+    display: block !important;
+    background: #ffffff !important;
+    width: 210mm !important;
+  }
+
+  /* Cover page */
+  .result-head {
+    width: 210mm !important;
+    height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    break-after: page !important;
+    page-break-after: always !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #ffffff !important;
+    border: 14mm solid #bd9400 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    position: relative !important;
+  }
+
+  .result-head::before {
+    content: "MONTHLY ARCHIVE";
+    position: absolute;
+    top: 20mm;
+    left: 18mm;
+    right: 18mm;
+    height: 15mm;
+    border: 1.5pt solid #bd9400;
+    display: flex;
+    align-items: center;
+    padding-left: 6mm;
+    font-size: 11pt;
+    font-weight: 800;
+    letter-spacing: .18em;
+    color: #7a6100;
+    background: #fffef9;
+  }
+
+  .result-head::after {
+    content: "일독클 · AUGUST 2026";
+    position: absolute;
+    bottom: 8mm;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: .09em;
+    color: #fff;
+  }
+
+  .result-head .eyebrow {
+    font-size: 10pt !important;
+    letter-spacing: .22em !important;
+    color: #8d7600 !important;
+    margin-bottom: 7mm !important;
+  }
+
+  .result-head h2 {
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: 37pt !important;
+    font-weight: 500 !important;
+    line-height: 1 !important;
+    margin: 0 0 5mm !important;
+  }
+
+  .name-display {
+    font-size: 13pt !important;
+    font-weight: 700 !important;
+  }
+
+  /* Each optional reflection becomes a full stationery page */
+  #resultItems .result-card {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: 14mm solid #bd9400 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    position: relative !important;
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  #resultItems .result-card::before {
+    content: "SUBJECT";
+    position: absolute;
+    top: 17mm;
+    left: 9mm;
+    font-size: 9.5pt;
+    font-weight: 800;
+    letter-spacing: .08em;
+    color: #fff4c7;
+    z-index: 5;
+  }
+
+  #resultItems .result-card::after {
+    content: "MONTHLY ARCHIVE · 일독클";
+    position: absolute;
+    bottom: 4mm;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: #fff7d2;
+  }
+
+  #resultItems .result-card img {
+    position: absolute !important;
+    top: 27mm !important;
+    left: 9mm !important;
+    width: 164mm !important;
+    height: 72mm !important;
+    object-fit: cover !important;
+    border: 1.5pt solid #bd9400 !important;
+    background: #f6f2e7 !important;
+  }
+
+  #resultItems .result-card .result-body {
+    position: absolute !important;
+    top: 27mm !important;
+    left: 9mm !important;
+    width: 164mm !important;
+    height: 232mm !important;
+    padding: 0 !important;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 12.5mm,
+        rgba(189,148,0,.38) 12.5mm,
+        rgba(189,148,0,.38) 12.8mm
+      ) !important;
+  }
+
+  /* If an image exists, move text below it */
+  #resultItems .result-card img + .result-body {
+    top: 105mm !important;
+    height: 154mm !important;
+  }
+
+  #resultItems .result-label {
+    display: inline-block !important;
+    background: #fffef9 !important;
+    border: 1.2pt solid #bd9400 !important;
+    padding: 3mm 4mm !important;
+    margin: 0 0 5mm !important;
+    font-size: 9pt !important;
+    font-weight: 800 !important;
+    letter-spacing: .08em !important;
+    color: #6f5900 !important;
+  }
+
+  #resultItems .result-title {
+    display: block !important;
+    font-size: 18pt !important;
+    line-height: 1.3 !important;
+    font-weight: 800 !important;
+    margin: 0 0 5mm !important;
+    padding: 0 2mm !important;
+    background: rgba(255,255,255,.92) !important;
+  }
+
+  #resultItems .result-text {
+    font-size: 11pt !important;
+    line-height: 12.8mm !important;
+    padding: 0 2mm !important;
+    color: #333 !important;
+    white-space: pre-wrap !important;
+    background: transparent !important;
+  }
+
+  /* Final mandatory-reflection page */
+  #result > .result-card {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    border: 14mm solid #bd9400 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    position: relative !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  #result > .result-card::before {
+    content: "MONTHLY QUESTION";
+    position: absolute;
+    top: 16mm;
+    left: 9mm;
+    right: 9mm;
+    height: 15mm;
+    border: 1.5pt solid #bd9400;
+    display: flex;
+    align-items: center;
+    padding-left: 5mm;
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: .12em;
+    color: #745d00;
+    background: #fffef9;
+  }
+
+  #result > .result-card::after {
+    content: "일독클 · AUGUST 2026";
+    position: absolute;
+    bottom: 4mm;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: .08em;
+    color: #fff7d2;
+  }
+
+  #result > .result-card .result-required {
+    position: relative !important;
+    margin: 0 9mm !important;
+    padding: 0 2mm !important;
+    border: 0 !important;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 12.5mm,
+        rgba(189,148,0,.38) 12.5mm,
+        rgba(189,148,0,.38) 12.8mm
+      ) !important;
+  }
+
+  #result > .result-card .result-required:first-child {
+    margin-top: 41mm !important;
+    min-height: 92mm !important;
+  }
+
+  #result > .result-card .result-required:last-child {
+    margin-top: 11mm !important;
+    min-height: 88mm !important;
+  }
+
+  #result > .result-card .result-label {
+    display: none !important;
+  }
+
+  #result > .result-card h3 {
+    display: inline-block !important;
+    background: #fffef9 !important;
+    border: 1.2pt solid #bd9400 !important;
+    padding: 3mm 4mm !important;
+    margin: 0 0 5mm !important;
+    font-size: 15pt !important;
+  }
+
+  #result > .result-card .result-text {
+    font-size: 11pt !important;
+    line-height: 12.8mm !important;
+    padding: 0 2mm !important;
+    color: #333 !important;
+  }
+}
+
+
+.print-question{
+  margin:4px 0 10px;
+  font-size:13px;
+  line-height:1.65;
+  color:var(--muted);
+  font-weight:600;
+}
+@media print{
+  #result > .result-card .print-question{
+    display:block !important;
+    background:#fff8d9 !important;
+    border-left:3pt solid #bd9400 !important;
+    padding:3mm 4mm !important;
+    margin:0 0 5mm !important;
+    font-size:10pt !important;
+    line-height:1.65 !important;
+    font-weight:700 !important;
+    color:#544600 !important;
+  }
+}
+
+
+:root{color-scheme:light only}html{color-scheme:light only!important;background:#f4f1ea!important}body{background:#f4f1ea!important;color:#262521!important}.card,.result-card{background:#fffdf8!important;color:#262521!important}input,textarea,select,button{color-scheme:light!important}input[type="text"],textarea{background:#fff!important;color:#262521!important;-webkit-text-fill-color:#262521!important}input::placeholder,textarea::placeholder{color:#8a857c!important;opacity:1!important;-webkit-text-fill-color:#8a857c!important}@media(prefers-color-scheme:dark){html,body{background:#f4f1ea!important;color:#262521!important}.card,.result-card{background:#fffdf8!important;color:#262521!important}input[type="text"],textarea{background:#fff!important;color:#262521!important;-webkit-text-fill-color:#262521!important}.sub,.hint,.status,.privacy,.footer{color:#777268!important}}.browser-note{margin:10px 2px 0;padding:10px 12px;border:1px solid #ded8cc;border-radius:12px;background:#fffdf8;color:#777268;font-size:11px;line-height:1.55;text-align:center}@media print{.browser-note{display:none!important}html,body,#result{background:#fff!important}}
+
+.result-question{
+  margin:7px 0 10px;
+  font-size:13px;
+  line-height:1.55;
+  color:#777268;
+  font-weight:600;
+}
+@media print{
+  #resultItems .result-question{
+    display:block !important;
+    margin:0 0 4mm !important;
+    padding:3mm 4mm !important;
+    background:#fff8d9 !important;
+    border-left:3pt solid #bd9400 !important;
+    color:#544600 !important;
+    font-size:9.5pt !important;
+    line-height:1.6 !important;
+    font-weight:700 !important;
+  }
+}
+
+</style>
+<style>
+@media print{
+ #resultItems .result-card img{
+   object-fit:contain !important;
+   object-position:center center !important;
+   background:#fffdf8 !important;
+   padding:2mm !important;
+ }
+}
+</style>
+</head>
+<body><div class="wrap">
+<section id="formView">
+<div class="hero">
+<div class="eyebrow">MONTHLY ARCHIVE · AUGUST 2026</div><h1>나의 8월 한 페이지</h1>
+<div class="sub">이번 달에 기억하고 싶은 것만 골라 사진과 짧은 글로 남겨보세요. 모든 항목을 채울 필요는 없습니다.</div>
+<div class="event">📅 2026년 8월 29일 토요일 오후 5시<br>📍 전포 비콩피<br>📖 일독클 월말 회고모임</div>
+</div>
+<div class="card required"><div><b>이름 또는 닉네임</b><span class="req">필수</span></div><input type="text" id="nickname" placeholder="예: 영수" oninput="saveSoon()"></div>
+<div class="section-title">이번 달에 남기고 싶은 것</div><div id="optional"></div>
+<div class="section-title">이번 달을 돌아보며</div>
+<div class="card required"><div><b>💭 이달의 질문</b><span class="req">필수</span></div><div class="hint">지금의 생활을 1년 더 반복해도 괜찮을까요?<br>계속 가져가고 싶은 것과 바꾸고 싶은 것은 무엇인가요?</div><textarea id="monthlyQ" placeholder="이번 달의 나를 천천히 돌아보며 적어보세요."></textarea></div>
+<div class="card required"><div><b>🌙 다음 달의 나</b><span class="req">필수</span></div><div class="hint">다음 달이 끝났을 때 ‘이것 하나는 잘했다’고 말하고 싶은 것은 무엇인가요?</div><textarea id="nextMe" placeholder="다음 달의 나에게 한 가지 약속을 남겨보세요."></textarea></div>
+<div id="saveStatus" class="status">자동 저장 준비 중…</div>
+<div class="actions"><button class="primary" onclick="makeResult()">✨ 나의 8월 완성하기</button></div>
+<button class="danger" onclick="clearSaved()">저장된 내용 모두 지우기</button>
+<div class="privacy">작성 내용과 사진은 이 기기의 브라우저 안에만 저장됩니다.<br>다른 사람에게 자동으로 전송되지 않습니다.</div><div class="browser-note">※ 브라우저의 강제 다크모드 설정에 따라 색상이 달라질 수 있습니다. 화면 색상이 이상한 경우 Chrome 브라우저 사용을 권장합니다.</div>
+</section>
+<section id="result">
+<div class="result-head"><div class="eyebrow">MY AUGUST · 2026</div><h2>나의 8월</h2><div id="nameDisplay" class="name-display"></div></div>
+<div id="resultItems"></div>
+<div class="result-card">
+<div class="result-required">
+  <div class="result-label">MONTHLY QUESTION</div>
+  <h3>💭 이달의 질문</h3>
+  <div class="print-question">지금의 생활을 1년 더 반복해도 괜찮을까요?<br>계속 가져가고 싶은 것과 바꾸고 싶은 것은 무엇인가요?</div>
+  <div id="rQ" class="result-text"></div>
+</div>
+<div class="result-required">
+  <div class="result-label">NEXT MONTH</div>
+  <h3>🌙 다음 달의 나</h3>
+  <div class="print-question">다음 달이 끝났을 때 ‘이것 하나는 잘했다’고 말하고 싶은 것은 무엇인가요?</div>
+  <div id="rNext" class="result-text"></div>
+</div>
+</div>
+<div class="result-actions"><button class="secondary" onclick="editAgain()">← 수정하기</button><button class="secondary" onclick="window.print()">PDF로 보관</button></div>
+<div class="footer">일독클 · Monthly Reflection<br>2026.08</div>
+</section></div>
+<script>
+const STORAGE_KEY='monthlyReflection_aug2026_v1';
+const items=[
+['content','🎬','이달의 콘텐츠','이번 달 가장 기억에 남은 책·영화·음악·전시 등은?'],
+['item','🛍️','이달의 잘 산 것','이번 달 가장 만족스러웠던 소비는?'],
+['place','📍','이달의 장소','이번 달 가장 기억에 남는 장소는 어디인가요?'],
+['moment','✨','이달의 순간','이번 달 중 다시 꺼내보고 싶은 순간은?'],
+['person','🫂','이달의 사람','이번 달 기억에 남거나 고마웠던 사람은?'],
+['change','🌱','이달의 변화','한 달 전의 나와 비교해 달라진 것이 있다면?'],
+['challenge','🎯','이달의 도전','이번 달 해보고 싶었던 것은 무엇이고, 해보니 어땠나요?']
+];
+const optional=document.getElementById('optional');
+items.forEach(([id,icon,title,q])=>optional.insertAdjacentHTML('beforeend',`<div class="card"><div class="pick"><input type="checkbox" id="c_${id}" onchange="toggle('${id}');saveAll()"><div><label for="c_${id}">${icon} ${title}</label><div class="hint">${q}</div></div></div><div class="fields" id="f_${id}"><div class="photo"><input type="file" id="p_${id}" accept="image/*" onchange="handlePhoto('${id}')"><img class="preview" id="pv_${id}"></div><input type="text" id="t_${id}" placeholder="제목 또는 이름" oninput="saveSoon()"><textarea id="d_${id}" placeholder="왜 기억에 남았나요? 짧게 적어보세요." oninput="saveSoon()"></textarea></div></div>`));
+document.getElementById('monthlyQ').addEventListener('input',saveSoon);document.getElementById('nextMe').addEventListener('input',saveSoon);
+let saveTimer=null;
+function saveSoon(){clearTimeout(saveTimer);document.getElementById('saveStatus').textContent='입력 중…';saveTimer=setTimeout(saveAll,350)}
+function toggle(id){document.getElementById('f_'+id).classList.toggle('on',document.getElementById('c_'+id).checked)}
+function resizeImage(dataUrl,maxW=1200,quality=.78){return new Promise(resolve=>{const img=new Image();img.onload=()=>{let w=img.width,h=img.height;if(w>maxW){h=Math.round(h*(maxW/w));w=maxW}const c=document.createElement('canvas');c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);resolve(c.toDataURL('image/jpeg',quality))};img.src=dataUrl})}
+function handlePhoto(id){const f=document.getElementById('p_'+id).files[0],img=document.getElementById('pv_'+id);if(!f){img.style.display='none';img.removeAttribute('src');saveAll();return}const r=new FileReader();r.onload=async e=>{try{img.src=await resizeImage(e.target.result)}catch(_){img.src=e.target.result}img.style.display='block';saveAll()};r.readAsDataURL(f)}
+function collectData(){const data={nickname:document.getElementById('nickname').value,monthlyQ:document.getElementById('monthlyQ').value,nextMe:document.getElementById('nextMe').value,items:{}};items.forEach(([id])=>{const pv=document.getElementById('pv_'+id);data.items[id]={checked:document.getElementById('c_'+id).checked,title:document.getElementById('t_'+id).value,desc:document.getElementById('d_'+id).value,photo:(pv&&pv.src&&pv.style.display!=='none')?pv.src:''}});return data}
+function saveAll(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(collectData()));const t=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});document.getElementById('saveStatus').textContent=`자동 저장됨 · ${t}`}catch(e){document.getElementById('saveStatus').textContent='사진 용량이 커서 글 위주로 저장되었을 수 있어요.'}}
+function restore(){const raw=localStorage.getItem(STORAGE_KEY);if(!raw){document.getElementById('saveStatus').textContent='자동 저장 켜짐';return}try{const data=JSON.parse(raw);document.getElementById('nickname').value=data.nickname||'';document.getElementById('monthlyQ').value=data.monthlyQ||'';document.getElementById('nextMe').value=data.nextMe||'';items.forEach(([id])=>{const x=(data.items||{})[id]||{};document.getElementById('c_'+id).checked=!!x.checked;document.getElementById('t_'+id).value=x.title||'';document.getElementById('d_'+id).value=x.desc||'';toggle(id);if(x.photo){const pv=document.getElementById('pv_'+id);pv.src=x.photo;pv.style.display='block'}});document.getElementById('saveStatus').textContent='이전에 작성하던 내용을 불러왔어요.'}catch(_){document.getElementById('saveStatus').textContent='자동 저장 켜짐'}}
+function clearSaved(){if(!confirm('저장된 회고 내용을 모두 지울까요?'))return;localStorage.removeItem(STORAGE_KEY);location.reload()}
+function esc(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function makeResult(){saveAll();const nick=document.getElementById('nickname').value.trim(),q=document.getElementById('monthlyQ').value.trim(),n=document.getElementById('nextMe').value.trim();if(!nick||!q||!n){alert('이름/닉네임, 이달의 질문, 다음 달의 나는 꼭 작성해주세요.');return}let out='';items.forEach(([id,icon,title])=>{if(!document.getElementById('c_'+id).checked)return;const t=document.getElementById('t_'+id).value.trim(),d=document.getElementById('d_'+id).value.trim(),pv=document.getElementById('pv_'+id),src=(pv.src&&pv.style.display!=='none')?pv.src:'';const qtext = items.find(x=>x[0]===id)?.[3] || '';
+out+=`<div class="result-card">${src?`<img src="${src}">`:''}<div class="result-body"><div class="result-label">${icon} ${title}</div><div class="result-question">${esc(qtext)}</div>${t?`<div class="result-title">${esc(t)}</div>`:''}${d?`<div class="result-text">${esc(d)}</div>`:''}</div></div>`});document.getElementById('resultItems').innerHTML=out||'<div class="card"><div class="sub">선택한 기록 없이 필수 회고만 담았습니다.</div></div>';document.getElementById('rQ').textContent=q;document.getElementById('rNext').textContent=n;document.getElementById('nameDisplay').textContent=nick+'의 8월';document.getElementById('formView').style.display='none';document.getElementById('result').style.display='block';window.scrollTo(0,0)}
+function editAgain(){document.getElementById('result').style.display='none';document.getElementById('formView').style.display='block';window.scrollTo(0,0)}
+restore();
+</script>
+</body></html>
