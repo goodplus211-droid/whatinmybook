@@ -63,6 +63,10 @@ input::placeholder,textarea::placeholder{color:#918a80!important;-webkit-text-fi
  #result>.result-card .result-text{font-size:10.5pt!important;line-height:10.5mm!important;padding:0 2mm!important;color:#333!important}
 }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+
 </head>
 <body><div class="wrap">
 <section id="formView">
@@ -86,8 +90,8 @@ input::placeholder,textarea::placeholder{color:#918a80!important;-webkit-text-fi
 <div class="result-required"><div class="result-label">MONTHLY QUESTION 02</div><h3>🌿 마음의 휴식</h3><div class="print-question">이번 달, 내 마음의 휴식을 위해 어떤 시간을 보냈나요?</div><div id="rQ2" class="result-text"></div></div>
 <div class="result-required"><div class="result-label">NEXT MONTH</div><h3>🌙 다음 달의 나</h3><div class="print-question">10월이 끝났을 때 ‘이것 하나는 잘했다’고 말하고 싶은 것은 무엇인가요?</div><div id="rNext" class="result-text"></div></div>
 </div>
-<div class="result-actions"><button class="secondary" onclick="editAgain()">← 수정하기</button><button class="secondary" onclick="window.print()">PDF로 보관</button></div>
-<div class="footer">일독클 · Monthly Reflection · 2026.09</div>
+<div class="result-actions"><button class="secondary" onclick="editAgain()">← 수정하기</button><button class="secondary" id="pdfBtn" onclick="downloadPDF()">PDF 파일 만들기</button></div>
+<div id="pdfStatus" class="status"></div><div class="footer">일독클 · Monthly Reflection · 2026.09</div>
 </section></div>
 <script>
 const KEY='ildokclub_2026_09_v2';
@@ -117,5 +121,133 @@ function editAgain(){$('result').style.display='none';$('formView').style.displa
 items.forEach(([id])=>{$('c_'+id).addEventListener('change',()=>{toggle(id);saveAll()});$('p_'+id).addEventListener('change',()=>handlePhoto(id));$('t_'+id).addEventListener('input',saveSoon);$('d_'+id).addEventListener('input',saveSoon)});
 ['nickname','monthlyQ1','monthlyQ2','nextMe'].forEach(id=>$(id).addEventListener('input',saveSoon));
 restore();
+
+async function downloadPDF(){
+  const btn=document.getElementById('pdfBtn');
+  const st=document.getElementById('pdfStatus');
+  const old=btn.textContent;
+  try{
+    btn.disabled=true;
+    btn.textContent='PDF 만드는 중…';
+    st.textContent='사진이 있으면 잠시 시간이 걸릴 수 있어요.';
+
+    if(!window.html2canvas || !window.jspdf){
+      throw new Error('PDF library unavailable');
+    }
+
+    // Build a dedicated export document so KakaoTalk does not need print support.
+    const exportRoot=document.createElement('div');
+    exportRoot.style.cssText='position:fixed;left:-10000px;top:0;width:794px;background:#fff;color:#222;z-index:-1;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;';
+
+    const name=(document.getElementById('nickname').value||'나').trim();
+    const cards=[...document.querySelectorAll('#resultItems .result-card')];
+
+    function pageBase(){
+      const p=document.createElement('div');
+      p.style.cssText='width:794px;height:1123px;padding:54px;background:#fffef9;border:52px solid #b88b18;box-sizing:border-box;position:relative;overflow:hidden;';
+      const foot=document.createElement('div');
+      foot.textContent='일독클 · MONTHLY ARCHIVE · 2026.09';
+      foot.style.cssText='position:absolute;bottom:15px;left:0;right:0;text-align:center;color:#fff5d1;font-size:12px;font-weight:700;letter-spacing:1px;';
+      p.appendChild(foot);
+      return p;
+    }
+
+    // Cover
+    const cover=pageBase();
+    cover.innerHTML += `<div style="position:absolute;top:78px;left:70px;right:70px;border:2px solid #b88b18;padding:18px;font-size:15px;font-weight:800;letter-spacing:2px;color:#735711">MONTHLY ARCHIVE · SEPTEMBER</div>
+      <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+        <div style="font-size:14px;letter-spacing:3px;color:#8a6814;font-weight:800">MY SEPTEMBER · 2026</div>
+        <div style="font-family:Georgia,serif;font-size:58px;margin:12px 0">나의 9월</div>
+        <div style="font-size:20px;font-weight:700">${esc(name)}의 9월</div>
+      </div>`;
+    exportRoot.appendChild(cover);
+
+    // Optional selected cards
+    cards.forEach(card=>{
+      const p=pageBase();
+      const img=card.querySelector('img');
+      const label=card.querySelector('.result-label')?.textContent||'';
+      const question=card.querySelector('.result-question')?.textContent||'';
+      const title=card.querySelector('.result-title')?.textContent||'';
+      const text=card.querySelector('.result-text')?.textContent||'';
+      let top=78;
+      if(img){
+        const im=document.createElement('img');
+        im.src=img.src;
+        im.style.cssText='display:block;width:100%;height:390px;object-fit:contain;object-position:center;background:#fff;border:2px solid #b88b18;padding:8px;box-sizing:border-box;';
+        p.appendChild(im); top=485;
+      }
+      const body=document.createElement('div');
+      body.style.cssText=`position:absolute;left:70px;right:70px;top:${top}px;bottom:60px;overflow:hidden;`;
+      body.innerHTML=`<div style="display:inline-block;border:2px solid #b88b18;padding:10px 14px;font-size:13px;font-weight:800;color:#684f10">${esc(label)}</div>
+        <div style="margin:12px 0;padding:10px 14px;background:#fff7da;border-left:5px solid #b88b18;font-size:13px;font-weight:700;line-height:1.5;color:#51400d">${esc(question)}</div>
+        ${title?`<div style="font-size:24px;font-weight:800;margin:12px 0">${esc(title)}</div>`:''}
+        <div style="font-size:16px;line-height:2;white-space:pre-wrap;background:repeating-linear-gradient(to bottom,transparent 0,transparent 31px,rgba(184,139,24,.28) 31px,rgba(184,139,24,.28) 32px)">${esc(text)}</div>`;
+      p.appendChild(body);
+      exportRoot.appendChild(p);
+    });
+
+    // Final questions
+    const final=pageBase();
+    const q1=document.getElementById('rQ1')?.textContent||'';
+    const q2=document.getElementById('rQ2')?.textContent||'';
+    const nx=document.getElementById('rNext')?.textContent||'';
+    final.innerHTML += `<div style="position:absolute;top:75px;left:70px;right:70px;border:2px solid #b88b18;padding:14px;font-size:14px;font-weight:800;letter-spacing:2px;color:#684f10">MONTHLY QUESTIONS</div>
+      <div style="position:absolute;top:145px;left:70px;right:70px">
+        <div style="margin-bottom:28px"><b style="font-size:20px">💭 이번 달의 나</b><div style="margin:9px 0;padding:10px;background:#fff7da;border-left:5px solid #b88b18;font-weight:700">이번 달, 나는 무엇에 가장 많은 시간과 마음을 썼나요?</div><div style="white-space:pre-wrap;line-height:1.8">${esc(q1)}</div></div>
+        <div style="margin-bottom:28px"><b style="font-size:20px">🌿 마음의 휴식</b><div style="margin:9px 0;padding:10px;background:#fff7da;border-left:5px solid #b88b18;font-weight:700">이번 달, 내 마음의 휴식을 위해 어떤 시간을 보냈나요?</div><div style="white-space:pre-wrap;line-height:1.8">${esc(q2)}</div></div>
+        <div><b style="font-size:20px">🌙 다음 달의 나</b><div style="margin:9px 0;padding:10px;background:#fff7da;border-left:5px solid #b88b18;font-weight:700">10월이 끝났을 때 ‘이것 하나는 잘했다’고 말하고 싶은 것은 무엇인가요?</div><div style="white-space:pre-wrap;line-height:1.8">${esc(nx)}</div></div>
+      </div>`;
+    exportRoot.appendChild(final);
+    document.body.appendChild(exportRoot);
+
+    await new Promise(r=>setTimeout(r,300));
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    const pages=[...exportRoot.children];
+
+    for(let i=0;i<pages.length;i++){
+      if(i>0) pdf.addPage();
+      const canvas=await html2canvas(pages[i],{
+        scale:1.6,
+        useCORS:true,
+        backgroundColor:'#fffef9',
+        logging:false
+      });
+      const img=canvas.toDataURL('image/jpeg',0.88);
+      pdf.addImage(img,'JPEG',0,0,210,297,undefined,'FAST');
+    }
+    exportRoot.remove();
+
+    const filename=`${name}_9월_월말회고.pdf`;
+    const blob=pdf.output('blob');
+    const file=new File([blob],filename,{type:'application/pdf'});
+
+    // Mobile share sheet is often more reliable than direct downloads in in-app browsers.
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      try{
+        await navigator.share({files:[file],title:'9월 월말회고'});
+        st.textContent='PDF를 만들었습니다.';
+        return;
+      }catch(e){
+        if(e && e.name==='AbortError'){st.textContent='공유가 취소되었습니다.';return;}
+      }
+    }
+
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download=filename;
+    document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),30000);
+    st.textContent='PDF를 만들었습니다. 다운로드 목록을 확인해주세요.';
+  }catch(e){
+    console.error(e);
+    st.textContent='이 브라우저에서 저장이 막혔습니다. 우측 상단 메뉴에서 외부 브라우저로 열어 다시 시도해주세요.';
+    alert('PDF 생성이 차단되었습니다. 카카오톡 우측 상단 메뉴에서 Chrome/Safari로 연 뒤 다시 시도해주세요.');
+  }finally{
+    btn.disabled=false;btn.textContent=old;
+  }
+}
+
 </script>
 </body></html>
